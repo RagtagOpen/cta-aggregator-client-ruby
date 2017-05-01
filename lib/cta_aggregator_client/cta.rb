@@ -1,15 +1,15 @@
-require 'cta_aggregator_client/api_client'
+require 'cta_aggregator_client/api/client'
 
 module CTAAggregatorClient
   module CTA 
     class << self
 
       def list(filters = {})
-        APIClient.list(:cta, filters)
+        API::Client.list(:cta, filters)
       end
 
       def find(uuid)
-        APIClient.find(:cta, uuid)
+        API::Client.find(:cta, uuid)
       end
 
       def create(attributes = {})
@@ -26,19 +26,19 @@ module CTAAggregatorClient
           'call-script-id': attributes[:call_script_id]
         }.reject{ |k,v| v.nil? }
 
-        APIClient.create(:cta, attributes)
+        API::Client.create(:cta, attributes)
       end
 
       def add_contact(cta_uuid, contact_uuid)
-        APIClient.add_relationship(:cta, cta_uuid, :contact, contact_uuid)
+        API::Client.add_relationship(:cta, cta_uuid, :contact, contact_uuid)
       end
 
       def add_location(cta_uuid, location_uuid)
-        APIClient.add_relationship(:cta, cta_uuid, :location, location_uuid)
+        API::Client.add_relationship(:cta, cta_uuid, :location, location_uuid)
       end
 
       def add_call_script(cta_uuid, call_script_uuid)
-        APIClient.add_relationship(:cta, cta_uuid, :call_script, call_script_uuid)
+        API::Client.add_relationship(:cta, cta_uuid, :call_script, call_script_uuid)
       end
     end
   end

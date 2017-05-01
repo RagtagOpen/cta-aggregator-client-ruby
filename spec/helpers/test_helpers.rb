@@ -9,4 +9,18 @@ module TestHelpers
   def api_url
     "#{CTAAggregatorClient::configuration.base_url}/#{CTAAggregatorClient.configuration.api_version}"
   end
+
+  def auth_url
+    "#{api_url}/authorize"
+  end
+
+  def headers_with_auth_creds
+    CTAAggregatorClient::API::Authenticator.default_headers.merge(
+      authorization: auth_info
+    )
+  end
+
+  def auth_info
+    "#{CTAAggregatorClient.configuration.api_key}:#{CTAAggregatorClient.configuration.api_secret}"
+  end
 end

@@ -3,7 +3,7 @@ require 'cta_aggregator_client/cta'
 require 'cta_aggregator_client/contact'
 require 'cta_aggregator_client/location'
 require 'cta_aggregator_client/call_script'
-require 'cta_aggregator_client/api_client'
+require 'cta_aggregator_client/api/client'
 
 module CTAAggregatorClient
 
