@@ -25,7 +25,7 @@ Next, you'll need to configure the client.  All API calls will fail unless you'v
 * `base_url` 
 * `api_version`  
 
-API calls that create or add a resoruce will fail if these values are not set:
+API calls that create or add a resource will fail if these values are not set:
 * `api_key` 
 * `api_secret`  
 
@@ -49,8 +49,8 @@ Here are a few examples of how you might use this gem.
 
 ### CTAs
 
- list all CTAs
-``
+list all CTAs
+```
 CTAAggregatorClient::CTA.list
 ```
 
