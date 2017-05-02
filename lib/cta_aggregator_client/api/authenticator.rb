@@ -11,7 +11,7 @@ module CTAAggregatorClient
 
         def headers_with_authentication 
           reset_auth unless Time.now < auth.expiration
-          default_headers.merge({authorization: "Bearer: #{auth.token}"})
+          default_headers.merge(authorization: "Bearer: #{auth.token}")
         end
 
         def auth
@@ -19,11 +19,7 @@ module CTAAggregatorClient
         end
 
         def generate_auth
-          url = "#{base_url}/#{api_version}/authorize"
-          headers = default_headers.merge(authorization: "#{api_key}:#{api_secret}")
-
-          raw_response = RestClient.post(url, nil, headers)
-
+          raw_response = RestClient.post(auth_url, nil, headers_with_auth_creds)
           token = raw_response.code == 201 ? JSON.parse(raw_response.body)["jwt"] : nil
 
           Auth.new(
