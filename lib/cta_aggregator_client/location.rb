@@ -1,15 +1,15 @@
-require 'cta_aggregator_client/api_client'
+require 'cta_aggregator_client/api/client'
 
 module CTAAggregatorClient
   module Location 
     class << self
 
       def list(filters = {})
-        APIClient.list(:location, filters)
+        API::Client.list(:location, filters)
       end
 
       def find(uuid)
-        APIClient.find(:location, uuid)
+        API::Client.find(:location, uuid)
       end
 
       def create(attributes = {})
@@ -21,7 +21,7 @@ module CTAAggregatorClient
           'notes': attributes[:notes]
         }.reject{ |k,v| v.nil? }
 
-        APIClient.create(:location, attrs)
+        API::Client.create(:location, attrs)
       end
 
     end

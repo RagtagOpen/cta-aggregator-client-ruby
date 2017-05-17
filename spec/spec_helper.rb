@@ -11,6 +11,8 @@ RSpec.configure do |config|
     CTAAggregatorClient.configure do |config|
       config.base_url = 'localhost'
       config.api_version = 'v1'
+      config.api_key = 'key'
+      config.api_secret = 'secret'
     end
   end
 

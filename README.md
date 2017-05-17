@@ -2,27 +2,45 @@
 
 This gem provides a simple interface for interacting with the CTAAggregator API.
 
+API actions for listing calls to action or viewing an individual
+call to action require no authentication.  However, creating resources does.
+
+If you want to create or create a connection between resources, you'll need 
+an API key and secret.  To get these, to send an email to 
+`ctaaggregator@ragtag.org`.
+
+Once you've got these credentials, this gem will take care exchanging them for
+a JSON Web Token (JWT) from the authentication endpoint and then pass it along during
+requests to the endpoint(s) you care about.
 
 ## Getting started
 
-You can add this to your Gemfile with:
+You can add this to your Gemfile.
 
 gem 'cta_aggregator_client'
-Then run bundle install
 
-Next, you'll need to configure the client.  API calls will fail unless you've set the `base_url` and `api_version`.  
+Then run bundle install.
 
+Next, you'll need to configure the client.  All API calls will fail unless you've set
+* `base_url` 
+* `api_version`  
+
+API calls that create or add a resource will fail if these values are not set:
+* `api_key` 
+* `api_secret`  
+
+Here's an example of how to configure your client.
 
 ```
 # config/intitalizers/cta_aggregator_client.rb
 
 CTAAggregatorClient.configure do |config|
-  config.base_url = 'localhost:3000' # (or staging url or production url
-  config.api_version = 'v1'
+  config.base_url = ENV['CTA_AGGREGATOR_HOST'] # => 'localhost:3000', staging url or production url
+  config.api_version = ENV['CTA_AGGREGATOR_VERSION']  # => probably 'v1'
+  config.api_key = ENV['CTA_AGGREGATOR_KEY'] # => whatever your key is
+  config.api_secret = ENV['CTA_AGGREGATOR_SECRET'] # => whatever your key is
 end
 ```
-
-You'll probably want to store the `base_url` and `api_version` as environment variables.
 
 
 ## Usage
@@ -31,7 +49,7 @@ Here are a few examples of how you might use this gem.
 
 ### CTAs
 
- list all CTAs
+list all CTAs
 ```
 CTAAggregatorClient::CTA.list
 ```

@@ -6,7 +6,7 @@ shared_examples_for "listable resource" do |resource|
 
     expect(RestClient).to receive(:get).with(
       url,
-      {headers: CTAAggregatorClient::APIClient::DEFAULT_HEADERS, params: {filter:  {}}}
+      {headers: CTAAggregatorClient::API::Client.default_headers, params: {filter:  {}}}
     ).and_return(response)
 
     expect(described_class.list).to eq response
@@ -18,7 +18,7 @@ shared_examples_for "listable resource" do |resource|
 
     expect(RestClient).to receive(:get).with(
       url,
-      {headers: CTAAggregatorClient::APIClient::DEFAULT_HEADERS, params: {filter:  filters}}
+      {headers: CTAAggregatorClient::API::Client.default_headers, params: {filter:  filters}}
     ).and_return(response)
 
     expect(described_class.list(filters)).to eq response

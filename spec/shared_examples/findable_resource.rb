@@ -7,7 +7,7 @@ shared_examples_for "findable resource" do |resource|
     url = "#{api_url}/#{formatted_resource_name(described_class, resource)}/#{uuid}"
     expect(RestClient).to receive(:get).with(
       url,
-      CTAAggregatorClient::APIClient::DEFAULT_HEADERS
+      CTAAggregatorClient::API::Client.default_headers
     ).and_return(response)
 
     expect(described_class.find(uuid)).to eq response

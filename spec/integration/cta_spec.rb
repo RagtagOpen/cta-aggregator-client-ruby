@@ -3,9 +3,29 @@ require 'spec_helper'
 describe CTAAggregatorClient::CTA do
   let(:cta_uuid) { '123' }
   let(:response) { Factory.response }
+  let(:auth_response) { Factory.auth_response }
+  let(:token) { Factory.token }
+
+  let(:default_headers) do
+    CTAAggregatorClient::API::Client.default_headers.merge(
+      authorization: "Bearer: #{token}"
+    )
+  end
 
   it_behaves_like "listable resource", :cta
   it_behaves_like "findable resource", :cta
+
+  before :each do
+    allow(RestClient).to receive(:post).with(
+      auth_url,
+      nil,
+      headers_with_auth_creds
+    ).and_return(auth_response)
+  end
+
+  after do
+    CTAAggregatorClient::API::Authenticator.reset_auth
+  end
 
   context "creation" do
     attributes = {
@@ -46,7 +66,7 @@ describe CTAAggregatorClient::CTA do
     expect(RestClient).to receive(:put).with(
       url,
       payload.to_json,
-      CTAAggregatorClient::APIClient::DEFAULT_HEADERS
+      default_headers
     ).and_return(response)
 
     expect(described_class.add_contact(cta_uuid, contact_uuid)).to eq response
@@ -65,7 +85,7 @@ describe CTAAggregatorClient::CTA do
     expect(RestClient).to receive(:put).with(
       url,
       payload.to_json,
-      CTAAggregatorClient::APIClient::DEFAULT_HEADERS
+      default_headers
     ).and_return(response)
 
     expect(described_class.add_location(cta_uuid, location_uuid)).to eq response
@@ -84,7 +104,7 @@ describe CTAAggregatorClient::CTA do
     expect(RestClient).to receive(:put).with(
       url,
       payload.to_json,
-      CTAAggregatorClient::APIClient::DEFAULT_HEADERS
+      default_headers
     ).and_return(response)
 
     expect(described_class.add_call_script(cta_uuid, call_script_uuid)).to eq response
