@@ -1,7 +1,22 @@
-shared_examples_for "creatable resource" do |passed_attrs, expected_attrs, resource|
+shared_examples_for "creatable resource" do |passed_attrs, passed_relationships, resource|
   let(:response) { Factory.response }
   let(:auth_response) { Factory.auth_response }
   let(:token) { Factory.token }
+
+  def relationships(relationship_hash)
+    return {} unless relationship_hash
+    relationship_hash.each_with_object({}) do |(resource_name, uuid_data), obj|
+      if uuid_data.is_a? Array
+        obj[resource_name.to_sym] = {
+          data: uuid_data.map {  |uuid| { type: resource_name, id: uuid } }
+        }
+      else
+        obj[resource_name.to_sym] = {
+          data: { type: "#{resource_name}s", id: uuid_data }
+        }
+      end
+    end
+  end
 
   context 'with successful authentication' do
 
@@ -13,11 +28,13 @@ shared_examples_for "creatable resource" do |passed_attrs, expected_attrs, resou
       resource_name = formatted_resource_name(described_class, resource)
 
       url = "#{api_url}/#{resource_name}"
+
       payload = {
         'data': {
           'type': resource_name,
-          'attributes': expected_attrs
-        }
+          'attributes': passed_attrs,
+          'relationships': relationships(passed_relationships)
+        }.reject{ |k,v| v.empty? }
       }
 
       allow(RestClient).to receive(:post).with(
@@ -36,7 +53,7 @@ shared_examples_for "creatable resource" do |passed_attrs, expected_attrs, resou
         headers_with_auth_token
       ).and_return(response)
 
-      expect(described_class.create(passed_attrs)).to eq response
+      expect(described_class.create(passed_attrs, passed_relationships)).to eq response
     end
   end
 
@@ -59,8 +76,9 @@ shared_examples_for "creatable resource" do |passed_attrs, expected_attrs, resou
       payload = {
         'data': {
           'type': resource_name,
-          'attributes': expected_attrs
-        }
+          'attributes': passed_attrs,
+          'relationships': relationships(passed_relationships)
+        }.reject{ |k,v| v.empty? }
       }
 
       headers_with_auth_creds = CTAAggregatorClient::API::Client.default_headers.merge(
@@ -83,7 +101,7 @@ shared_examples_for "creatable resource" do |passed_attrs, expected_attrs, resou
         header_sans_auth_token
       ).and_return(Factory.bad_token_response)
 
-      expect(described_class.create(passed_attrs).code).to eq 401
+      expect(described_class.create(passed_attrs, passed_relationships).code).to eq 401
     end
   end
 
