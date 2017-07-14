@@ -1,7 +1,4 @@
 require 'cta_aggregator_client/configuration'
-require 'cta_aggregator_client/cta'
-require 'cta_aggregator_client/contact'
-require 'cta_aggregator_client/call_script'
 require 'cta_aggregator_client/api/client'
 require 'cta_aggregator_client/advocacy_campaign'
 require 'cta_aggregator_client/target'
