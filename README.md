@@ -47,65 +47,133 @@ end
 
 Here are a few examples of how you might use this gem.
 
-### CTAs
+### Advocacy Campaigns
 
-list all CTAs
+list all Advocacy Campaigns
 ```
-CTAAggregatorClient::CTA.list
-```
-
-list upcoming CTAs
-```
-CTAAggregatorClient::CTA.list(upcoming: true)
-```
-    
-Find a CTA
-```
-CTAAggregatorClient::CTA.find("some-uuid")
+CTAAggregatorClient::AdvocacyCampaign.list
 ```
 
+Find an Advocacy Campaign
+```
+CTAAggregatorClient::AdvocacyCampaign.find("some-uuid")
+```
 
-Create a CTA
+Create an Advocacy Campaign
+Note: you will have to have an API Key and Secret in order to create this resource
+```
+attributes = {
+  title: 'Email Your Congressional reps',
+  description: 'Voluptas delectus distinctio maiores consequatur aspernatur.',
+  browser_url: 'http://example.com/nya.lang',
+  origin_system: 'FooCalls',
+  featured_image_url: 'http://www.example.com/nya/300x300.png',
+  action_type: 'email',
+  template: 'Eum itaque et nisi dolores assumenda ipsum. Voluptates qui aut nobis veniam maxime qui',
+}
+
+relationships = { targets: ['a2f6f86b-a214-4892-8c06-8caece820fb0', '215ed993-3cd1-4fbc-b8af-7e2082813d06'] }
+# Note that becuase an Advocacy can have many relationships, be sure to send an array of targets, even if there's only one
+# e.g. relationships = { targets: ['a2f6f86b-a214-4892-8c06-8caece820fb0'] }
+
+CTAAggregatorClient::CTA.create(attributes, relationships)
+```
+
+
+###  Events
+
+list all Events
+```
+CTAAggregatorClient::Event.list
+```
+
+list upcoming Events
+```
+CTAAggregatorClient::Event.list(upcoming: true)
+```
+
+Find an Event
+```
+CTAAggregatorClient::Event.find("some-uuid")
+```
+
+
+Create a Event
 Note: you will have to have an API Key and Secret in order to create a CTA
 ```
 attributes = {
-  title: 'cool thing',
-  descrition: 'blah, blah, blah',
-  website: 'www.example.com',
-  cta_type: "onsite",
-  free: true,
-  start_time: 1524175800,
-  end_time: 1524186600,
-  location_id: "df4aec9f-2ee9-4f53-8708-d32ad2c3babb",
-  contact_id: "be7ba220-47b4-4450-b863-57b82481f2a9" 
-  call_script_id: "df62fbda-93b3-4f34-8a4c-5bf84564b699"
+  title: 'March on Washington',
+  description: 'Illum molestiae aut ullam non qui consequatur magni.',
+  browser_url: 'http://example.com/marge',
+  origin_system: '5Calls',
+  featured_image_url: 'http://lorempixel.com/300/300',
+  start_date: '2017-07-08T03:58:25.098Z',
+  end_date: '2017-07-13T03:58:25.098Z',
+  free: false,
 }
+relationships = { location: '215ed993-3cd1-4fbc-b8af-7e2082813d06' }
+# Note that becuase an Event only has one location, so be sure your hash has a key of `location`, rather than `locations`
 
-CTAAggregatorClient::CTA.create(attributes)
+CTAAggregatorClient::Event.create(attributes, relationships)
+
+
 ```
 
-### Contacts
+### Targets
 
- list all Contacts
+list all Targets
 ```
-CTAAggregatorClient::Contact.list
-```
-
-Find a Contact
-```
-CTAAggregatorClient::Contact.find("some-uuid")
+CTAAggregatorClient::Target.list
 ```
 
+Find a Target
+```
+CTAAggregatorClient::Target.find("some-uuid")
+```
 
-Create a Contact
-Note: you will have to have an API Key and Secret in order to create a CTA
+
+Create a Target
+Note: you will have to have an API Key and Secret in order to create a Target
 ```
 attributes = {
-  name: 'George Washington',
-  email: 'NumeroUno@potus.gov'
+  organization: 'Mohr Inc',
+  given_name: 'Pascale',
+  family_name: 'White',
+  ocdid: 'b4503418-6aab-451a-8e55-11ffd575bc85',
+  postal_addresses: [
+  {
+    primary: true,
+    address_type: 'Office',
+    venue: 'Southern Nitzsche',
+    address_lines: [
+      '36261 Kovacek Prairie',
+      'Apt. 760'
+    ],
+    locality: 'West Brandynfort',
+    region: 'WV',
+    postal_code: '66900-1309',
+    country: 'US'
+     }
+  ],
+  email_addresses: [
+    {
+      primary: true,
+      address: 'jeffry_durgan@rutherfordcarroll.net',
+      address_type: 'work'
+     }
+  ],
+  phone_numbers: [
+     {
+       primary: true,
+       number: '(606) 087-8543 x254',
+       extension: '4594',
+       number_type: 'work'
+      }
+    ]
+  }
 }
 
-CTAAggregatorClient::Contact.create(attributes)
+CTAAggregatorClient::Target.create(attributes)
 ```
 
 ### Locations
@@ -125,34 +193,12 @@ Create a Location
 Note: you will have to have an API Key and Secret in order to create a CTA
 ```
 attributes = {
-  addres: '123 Fake Street',
-  zipcode: '12345'
+  venue: 'Eastern Kemmer University',
+  address_lines: ['684 Schinner Trail', 'Apt. 512'],
+  locality: 'Rosenbaumville',
+  region: 'VA',
+  postal_code: '78183-3430'
 }
 
 CTAAggregatorClient::Location.create(attributes)
 ```
-
-### Call Scripts
-
-list all Call Scripts
-```
-CTAAggregatorClient::CallScript.list
-```
-
-Find a Contact
-```
-CTAAggregatorClient::CallScript.find("some-uuid")
-```
-
-
-Create a Contact
-Note: you will have to have an API Key and Secret in order to create a CTA
-
-```
-attributes = {
-  text: 'Hello World.'
-}
-
-CTAAggregatorClient::CallScript.create(attributes)
-```
-
