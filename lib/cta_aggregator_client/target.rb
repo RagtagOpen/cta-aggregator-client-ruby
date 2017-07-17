@@ -1,10 +1,10 @@
 require 'cta_aggregator_client/cta_resource'
 
 module CTAAggregatorClient
-  module Location
+  module Target 
     extend CTAResource
 
-    RESOURCE_NAME = :location
+    RESOURCE_NAME = :target
 
     class << self
 
