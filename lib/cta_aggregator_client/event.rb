@@ -5,11 +5,16 @@ module CTAAggregatorClient
     extend CTAResource
 
     RESOURCE_NAME = :event
+    RELATIONSHIPS = :location
 
     class << self
 
       def resource_name
         RESOURCE_NAME
+      end
+
+      def relationships
+        RELATIONSHIPS
       end
 
     end

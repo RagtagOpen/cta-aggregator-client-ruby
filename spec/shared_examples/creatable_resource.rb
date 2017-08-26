@@ -4,7 +4,8 @@ shared_examples_for "creatable resource" do |passed_attrs, passed_relationships,
   let(:token) { Factory.token }
 
   def relationships(relationship_hash)
-    return {} unless relationship_hash
+    return {} unless relationship_hash && relationship_hash.reject { |k,v| v.nil? }.any?
+
     relationship_hash.each_with_object({}) do |(resource_name, uuid_data), obj|
       if uuid_data.is_a? Array
         obj[resource_name.to_sym] = {
@@ -28,12 +29,14 @@ shared_examples_for "creatable resource" do |passed_attrs, passed_relationships,
       resource_name = formatted_resource_name(described_class, resource)
 
       url = "#{api_url}/#{resource_name}"
+      payload_params = passed_attrs.clone
+      relationship_data = { passed_relationships => payload_params.delete(passed_relationships) }
 
       payload = {
         'data': {
           'type': resource_name,
-          'attributes': passed_attrs,
-          'relationships': relationships(passed_relationships)
+          'attributes': payload_params,
+          'relationships': relationships(relationship_data)
         }.reject{ |k,v| v.empty? }
       }
 
@@ -53,7 +56,7 @@ shared_examples_for "creatable resource" do |passed_attrs, passed_relationships,
         headers_with_auth_token
       ).and_return(response)
 
-      expect(described_class.create(passed_attrs, passed_relationships)).to eq response
+      expect(described_class.create(passed_attrs)).to eq response
     end
   end
 
@@ -73,11 +76,14 @@ shared_examples_for "creatable resource" do |passed_attrs, passed_relationships,
       resource_name = formatted_resource_name(described_class, resource)
 
       url = "#{api_url}/#{resource_name}"
+      payload_params = passed_attrs.clone
+      relationship_data = { passed_relationships => payload_params.delete(passed_relationships) }
+
       payload = {
         'data': {
           'type': resource_name,
-          'attributes': passed_attrs,
-          'relationships': relationships(passed_relationships)
+          'attributes': payload_params,
+          'relationships': relationships(relationship_data)
         }.reject{ |k,v| v.empty? }
       }
 
@@ -101,7 +107,7 @@ shared_examples_for "creatable resource" do |passed_attrs, passed_relationships,
         header_sans_auth_token
       ).and_return(Factory.bad_token_response)
 
-      expect(described_class.create(passed_attrs, passed_relationships).code).to eq 401
+      expect(described_class.create(passed_attrs).code).to eq 401
     end
   end
 

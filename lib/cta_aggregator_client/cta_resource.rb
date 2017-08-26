@@ -11,8 +11,12 @@ module CTAAggregatorClient
       API::Client.find(resource_name, uuid)
     end
 
-    def create(attributes, relationships = {})
-      API::Client.create(resource_name, attributes, relationships)
+    def create(attributes)
+      if relationships
+        relationship_data = { relationships => attributes.delete(relationships) }
+      end
+
+      API::Client.create(resource_name, attributes, relationship_data)
     end
 
     def update(attributes)
@@ -26,6 +30,10 @@ module CTAAggregatorClient
 
     def resource_name
       raise NotImplementedError
+    end
+
+    def relationships
+      nil
     end
 
   end
