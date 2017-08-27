@@ -36,6 +36,18 @@ module CTAAggregatorClient
           perform_authenticated_request(:post, url, payload)
         end
 
+        def update(resource_name, uuid, attributes)
+          url = "#{base_url}/#{api_version}/#{resource_name}s/#{uuid}"
+          payload = {
+            'data': {
+              'type': "#{resource_name}s",
+              'attributes': attributes
+            }
+          }.to_json
+
+          perform_authenticated_request(:put, url, payload)
+        end
+
         def relationship_params(relationships)
           return {} unless relationships
 
@@ -73,7 +85,7 @@ module CTAAggregatorClient
           perform_authenticated_request(:put, url, payload)
         end
 
-        def perform_authenticated_request(http_method, url, payload)
+        def perform_authenticated_request(http_method, url, payload={})
           raw_response = RestClient.send(http_method.to_sym, url, payload, headers_with_access_token)
           translate_response(raw_response)
         end

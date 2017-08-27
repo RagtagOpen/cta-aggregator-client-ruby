@@ -4,6 +4,8 @@ describe CTAAggregatorClient::Event do
 
   it_behaves_like 'listable resource'
   it_behaves_like 'findable resource'
+  it_behaves_like 'updatable resource'
+
   context 'creation' do
     event_attrs = {
       title: 'March on Washington',
