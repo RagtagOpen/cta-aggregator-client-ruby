@@ -5,6 +5,7 @@ describe CTAAggregatorClient::Target do
   it_behaves_like 'listable resource'
   it_behaves_like 'findable resource'
   it_behaves_like 'updatable resource'
+  it_behaves_like 'deletable resource'
 
   context 'creation' do
     attributes = {

@@ -48,6 +48,13 @@ module CTAAggregatorClient
           perform_authenticated_request(:put, url, payload)
         end
 
+        def delete(resource_name, uuid)
+          url = "#{base_url}/#{api_version}/#{resource_name}s/#{uuid}"
+
+          raw_response = RestClient.delete(url, headers_with_access_token)
+          translate_response(raw_response)
+        end
+
         def relationship_params(relationships)
           return {} unless relationships
 

@@ -20,6 +20,10 @@ module CTAAggregatorClient
       API::Client.update(resource_name, uuid, attributes)
     end
 
+    def delete(uuid)
+      API::Client.delete(resource_name, uuid)
+    end
+
     def resource_name
       raise NotImplementedError
     end
