@@ -41,6 +41,7 @@ module CTAAggregatorClient
           payload = {
             'data': {
               'type': "#{resource_name}s",
+              'id': uuid,
               'attributes': attributes
             }
           }.to_json

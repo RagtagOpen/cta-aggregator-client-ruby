@@ -16,6 +16,7 @@ shared_examples_for "updatable resource" do |resource|
     payload = {
       'data': {
         'type': formatted_resource_name(described_class, resource),
+        'id': uuid,
         'attributes': attrs_to_change,
       }
     }
