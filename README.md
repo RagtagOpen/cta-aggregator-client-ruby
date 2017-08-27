@@ -73,12 +73,23 @@ attributes = {
 }
 
 relationships = { targets: ['a2f6f86b-a214-4892-8c06-8caece820fb0', '215ed993-3cd1-4fbc-b8af-7e2082813d06'] }
-# Note that becuase an Advocacy can have many relationships, be sure to send an array of targets, even if there's only one
+# Note that because an Advocacy can have many relationships, be sure to send an array of targets, even if there's only one
 # e.g. relationships = { targets: ['a2f6f86b-a214-4892-8c06-8caece820fb0'] }
 
 CTAAggregatorClient::CTA.create(attributes, relationships)
 ```
 
+Update an Advocacy Campaign
+If you attempt to update a resource created by someone else, the API will return a 403 Unauthorized response.
+
+```
+# Pass along the id and any attributes you want to change.
+attributes = {
+  id: 'some-uuid'
+  title: 'New title',
+}
+CTAAggregatorClient::AdvocacyCampaign.update(attributes)
+```
 
 ###  Events
 
@@ -112,11 +123,21 @@ attributes = {
   free: false,
 }
 relationships = { location: '215ed993-3cd1-4fbc-b8af-7e2082813d06' }
-# Note that becuase an Event only has one location, so be sure your hash has a key of `location`, rather than `locations`
+# Note that because an Event only has one location, so be sure your hash has a key of `location`, rather than `locations`
 
 CTAAggregatorClient::Event.create(attributes, relationships)
+```
 
-
+Update an Event
+Note: you can only update a resource that you were responsible for creating.
+If you attempt to update a resource created by someone else, the API will return a 403 Unauthorized response.
+```
+# Pass along the id and any attributes you want to change.
+attributes = {
+  id: 'some-uuid'
+  title: 'New title',
+}
+CTAAggregatorClient::Event.update(attributes)
 ```
 
 ### Targets
@@ -176,6 +197,18 @@ attributes = {
 CTAAggregatorClient::Target.create(attributes)
 ```
 
+Update a Target
+Note: you can only update a resource that you were responsible for creating.
+If you attempt to update a resource created by someone else, the API will return a 403 Unauthorized response.
+```
+# Pass along the id and any attributes you want to change.
+attributes = {
+  id: 'some-uuid'
+  'organization': "FCC"
+}
+CTAAggregatorClient::Target.update(attributes)
+```
+
 ### Locations
 
 list all Locations
@@ -201,4 +234,16 @@ attributes = {
 }
 
 CTAAggregatorClient::Location.create(attributes)
+```
+
+Update a Location
+Note: you can only update a resource that you were responsible for creating.
+If you attempt to update a resource created by someone else, the API will return a 403 Unauthorized response.
+```
+# Pass along the id and any attributes you want to change.
+attributes = {
+  id: 'some-uuid'
+  venue: 'National Mall',
+}
+CTAAggregatorClient::Location.update(attributes)
 ```
