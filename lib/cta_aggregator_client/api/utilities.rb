@@ -20,7 +20,7 @@ module CTAAggregatorClient
       end
 
       def auth_url
-        "#{base_url}/#{api_version}/authorize"
+        "#{base_url}/#{api_version}/authentications"
       end
 
       def api_key
