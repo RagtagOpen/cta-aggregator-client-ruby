@@ -70,13 +70,11 @@ attributes = {
   featured_image_url: 'http://www.example.com/nya/300x300.png',
   action_type: 'email',
   template: 'Eum itaque et nisi dolores assumenda ipsum. Voluptates qui aut nobis veniam maxime qui',
+  targets: ['a2f6f86b-a214-4892-8c06-8caece820fb0', '215ed993-3cd1-4fbc-b8af-7e2082813d06']
 }
+# Note that becuase an Advocacy Campaign can have many relationships, be sure to send an array of targets, even if there's only one
 
-relationships = { targets: ['a2f6f86b-a214-4892-8c06-8caece820fb0', '215ed993-3cd1-4fbc-b8af-7e2082813d06'] }
-# Note that because an Advocacy can have many relationships, be sure to send an array of targets, even if there's only one
-# e.g. relationships = { targets: ['a2f6f86b-a214-4892-8c06-8caece820fb0'] }
-
-CTAAggregatorClient::CTA.create(attributes, relationships)
+CTAAggregatorClient::CTA.create(attributes)
 ```
 
 Update an Advocacy Campaign
@@ -121,12 +119,11 @@ attributes = {
   start_date: '2017-07-08T03:58:25.098Z',
   end_date: '2017-07-13T03:58:25.098Z',
   free: false,
+  location: '215ed993-3cd1-4fbc-b8af-7e2082813d06'
 }
-relationships = { location: '215ed993-3cd1-4fbc-b8af-7e2082813d06' }
-# Note that because an Event only has one location, so be sure your hash has a key of `location`, rather than `locations`
+# Note that becuase an Event only has one location, so be sure your hash has a key of `location`, rather than `locations`
 
-CTAAggregatorClient::Event.create(attributes, relationships)
-```
+CTAAggregatorClient::Event.create(attributes)
 
 Update an Event
 Note: you can only update a resource that you were responsible for creating.
