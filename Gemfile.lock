@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cta_aggregator_client (0.0.2)
+    cta_aggregator_client (0.2.0)
       rest-client (= 2.0.1)
 
 GEM
