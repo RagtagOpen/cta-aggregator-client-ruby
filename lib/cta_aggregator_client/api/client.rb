@@ -57,7 +57,7 @@ module CTAAggregatorClient
         end
 
         def relationship_params(relationships)
-          return {} unless relationships
+          return {} unless relationships && relationships.reject { |k,v| v.nil? }.any?
 
           relationships.each_with_object({}) do |(resource_name, uuid_data), obj|
             if uuid_data.is_a? Array

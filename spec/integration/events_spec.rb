@@ -17,10 +17,10 @@ describe CTAAggregatorClient::Event do
       start_date: '2017-07-08T03:58:25.098Z',
       end_date: '2017-07-13T03:58:25.098Z',
       free: false,
+      location: '215ed993-3cd1-4fbc-b8af-7e2082813d06'
     }
-    relationship_attrs = { location: '215ed993-3cd1-4fbc-b8af-7e2082813d06' }
 
-    it_behaves_like 'creatable resource', event_attrs, relationship_attrs
+    it_behaves_like 'creatable resource', event_attrs, :location
   end
 
 end

@@ -16,9 +16,9 @@ describe CTAAggregatorClient::AdvocacyCampaign do
       featured_image_url: 'http://lorempixel.com/300/300',
       action_type: 'email',
       template: 'Eum itaque et nisi dolores assumenda ipsum. Voluptates qui aut nobis veniam maxime qui. Illum saepe eum corporis vero qui soluta aliquam.\nTemporibus reiciendis velit fugiat. Facere laborum quia ea laboriosam necessitatibus quisquam eligendi. Et est dolorem eligendi id aut sint.\nAnimi qui totam voluptatem nesciunt iure et dolorem. Eos ut dolorum et quo illum fuga atque. Facere a ipsa corrupti assumenda provident commodi facilis. Eligendi officia est et.',
+      targets: ['a2f6f86b-a214-4892-8c06-8caece820fb0', '215ed993-3cd1-4fbc-b8af-7e2082813d06']
     }
-    relationship_attrs = { targets: ['a2f6f86b-a214-4892-8c06-8caece820fb0', '215ed993-3cd1-4fbc-b8af-7e2082813d06'] }
 
-    it_behaves_like 'creatable resource', campaign_attrs, relationship_attrs
+    it_behaves_like 'creatable resource', campaign_attrs, :targets
   end
 end
