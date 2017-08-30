@@ -11,7 +11,7 @@ module TestHelpers
   end
 
   def auth_url
-    "#{api_url}/authorize"
+    "#{api_url}/authentications"
   end
 
   def headers_with_auth_creds
