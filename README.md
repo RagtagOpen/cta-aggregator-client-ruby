@@ -5,13 +5,7 @@ This gem provides a simple interface for interacting with the CTAAggregator API.
 API actions for listing calls to action or viewing an individual
 call to action require no authentication.  However, creating resources does.
 
-If you want to create or create a connection between resources, you'll need 
-an API key and secret.  To get these, to send an email to 
-`ctaaggregator@ragtag.org`.
-
-Once you've got these credentials, this gem will take care exchanging them for
-a JSON Web Token (JWT) from the authentication endpoint and then pass it along during
-requests to the endpoint(s) you care about.
+Since the CTA Aggregator project has been shuttered, this gem exists only as reference.
 
 ## Getting started
 
@@ -25,7 +19,7 @@ Next, you'll need to configure the client.  All API calls will fail unless you'v
 * `base_url` 
 * `api_version`  
 
-API calls that create or add a resource will fail if these values are not set:
+API calls that create or add a resource will fail as these values are not set:
 * `api_key` 
 * `api_secret`  
 
